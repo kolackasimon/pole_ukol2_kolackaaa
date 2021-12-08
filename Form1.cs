@@ -16,37 +16,30 @@ namespace pole_ukol2_kolackaaa
         {
             InitializeComponent();
         }
-        int[] pole;
+        double[] pole;
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            listBox2.Items.Clear();
             Random rnd = new Random();
             try
             {
                 int vstup = int.Parse(textBoxVstup.Text);
                 double soucet = 0, poc = 0;
-                int max = int.MinValue;
-                pole = new int[vstup];
+                double max = double.MinValue;
+                pole = new double[vstup];
                 for (int i = 0; i < pole.Length; i++)
                 {
-                    pole[i] = rnd.Next(-1000, 1000);
-                    soucet += pole[i];
-                    poc++;
+                    pole[i] = Math.Round(rnd.NextDouble() * (1000 + 1000) + (-1000),2);
                     listBox1.Items.Add(pole[i].ToString());
+                    soucet += pole[i];
+                    poc++;                
                 }
-                int[] poleZmenene = new int[(int)poc];
-                for (int i = 0; i < pole.Length; i++)
+                foreach (double i in pole)
                 {
-                    if (pole[i] <= (soucet / poc))
-                    {
-                        poleZmenene[i] = pole[i];
-                        listBox2.Items.Add(poleZmenene[i]);
-                        if (poleZmenene[i] > max) { max = poleZmenene[i]; }
-                    }
+                    if (i <= (soucet / poc)){ if (i > max) { max = i; }}
                 }
-                labelArit.Text = "ARIT.P.: " + soucet / poc;
-                labelMAX.Text = "MAX: " + max;
+                labelArit.Text = "ARIT.P.: " + Math.Round(soucet / poc,2);
+                labelMAX.Text = "MAX: " + Math.Round(max, 2);
             }
             catch { MessageBox.Show("Zadal jsi špatnou hodnotu!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
